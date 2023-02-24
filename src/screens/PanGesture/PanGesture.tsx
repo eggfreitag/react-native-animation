@@ -4,7 +4,10 @@ import Animated, {
   useAnimatedGestureHandler,
   useAnimatedStyle,
 } from "react-native-reanimated";
-import { PanGestureHandler } from "react-native-gesture-handler";
+import {
+  PanGestureHandler,
+  PanGestureHandlerGestureEvent,
+} from "react-native-gesture-handler";
 import { View, LayoutRectangle, StyleSheet } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
@@ -27,10 +30,17 @@ const PanGesture = ({
   const translateX = useSharedValue(0);
   const translateY = useSharedValue(0);
 
-  const onGestureEvent = useAnimatedGestureHandler({
-    onActive: ({ translationX, translationY }) => {
-      translateX.value = translationX;
-      translateY.value = translationY;
+  const onGestureEvent = useAnimatedGestureHandler<
+    PanGestureHandlerGestureEvent,
+    { x: number; y: number }
+  >({
+    onStart: (_event, context) => {
+      context.x = translateX.value;
+      context.y = translateY.value;
+    },
+    onActive: ({ translationX, translationY }, context) => {
+      translateX.value = translationX + context.x;
+      translateY.value = translationY + context.y;
     },
   });
 
