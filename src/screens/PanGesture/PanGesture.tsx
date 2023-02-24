@@ -12,6 +12,7 @@ import { View, LayoutRectangle, StyleSheet } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import Card, { Cards, CARD_HEIGHT, CARD_WIDTH } from "../../components/Card";
+import { clamp } from "react-native-redash";
 
 const styles = StyleSheet.create({
   container: {
@@ -26,7 +27,7 @@ const PanGesture = ({
 }: LayoutRectangle) => {
   const { bottom: marginBottom } = useSafeAreaInsets();
   const boundX = windowWidth - CARD_WIDTH;
-  const boundY = windowHeight - CARD_HEIGHT;
+  const boundY = windowHeight - CARD_HEIGHT - marginBottom;
   const translateX = useSharedValue(0);
   const translateY = useSharedValue(0);
 
@@ -39,8 +40,8 @@ const PanGesture = ({
       context.y = translateY.value;
     },
     onActive: ({ translationX, translationY }, context) => {
-      translateX.value = translationX + context.x;
-      translateY.value = translationY + context.y;
+      translateX.value = clamp(translationX + context.x, 0, boundX);
+      translateY.value = clamp(translationY + context.y, 0, boundY);
     },
   });
 
