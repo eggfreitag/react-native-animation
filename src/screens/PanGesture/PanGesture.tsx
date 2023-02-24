@@ -1,18 +1,19 @@
 import React from "react";
 import Animated, {
+  withDecay,
   useSharedValue,
-  useAnimatedGestureHandler,
   useAnimatedStyle,
+  useAnimatedGestureHandler,
 } from "react-native-reanimated";
 import {
   PanGestureHandler,
   PanGestureHandlerGestureEvent,
 } from "react-native-gesture-handler";
+import { clamp, withBouncing } from "react-native-redash";
 import { View, LayoutRectangle, StyleSheet } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import Card, { Cards, CARD_HEIGHT, CARD_WIDTH } from "../../components/Card";
-import { clamp } from "react-native-redash";
 
 const styles = StyleSheet.create({
   container: {
@@ -26,8 +27,10 @@ const PanGesture = ({
   height: windowHeight,
 }: LayoutRectangle) => {
   const { bottom: marginBottom } = useSafeAreaInsets();
+
   const boundX = windowWidth - CARD_WIDTH;
   const boundY = windowHeight - CARD_HEIGHT - marginBottom;
+
   const translateX = useSharedValue(0);
   const translateY = useSharedValue(0);
 
@@ -35,13 +38,29 @@ const PanGesture = ({
     PanGestureHandlerGestureEvent,
     { x: number; y: number }
   >({
-    onStart: (_event, context) => {
+    onStart: (_, context) => {
       context.x = translateX.value;
       context.y = translateY.value;
     },
     onActive: ({ translationX, translationY }, context) => {
       translateX.value = clamp(translationX + context.x, 0, boundX);
       translateY.value = clamp(translationY + context.y, 0, boundY);
+    },
+    onEnd: ({ velocityX, velocityY }) => {
+      translateX.value = withBouncing(
+        withDecay({
+          velocity: velocityX,
+        }),
+        0,
+        boundX
+      );
+      translateY.value = withBouncing(
+        withDecay({
+          velocity: velocityY,
+        }),
+        0,
+        boundY
+      );
     },
   });
 
@@ -55,7 +74,7 @@ const PanGesture = ({
   return (
     <View style={[styles.container, { marginBottom }]}>
       <PanGestureHandler {...{ onGestureEvent }}>
-        <Animated.View style={[style]}>
+        <Animated.View {...{ style }}>
           <Card card={Cards.Card4} />
         </Animated.View>
       </PanGestureHandler>
