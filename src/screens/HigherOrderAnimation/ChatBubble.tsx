@@ -1,6 +1,7 @@
 import React from "react";
 import { SharedValue } from "react-native-reanimated";
 import { View, Text, Dimensions, StyleSheet } from "react-native";
+
 import Bubble from "./Bubble";
 
 const { width: windowWidth } = Dimensions.get("window");
@@ -30,7 +31,7 @@ type ChatBubbleProps = {
 };
 
 const ChatBubble = ({ progress }: ChatBubbleProps) => {
-  const bubbles = [1, 2, 3];
+  const bubbles = [0, 1, 2];
   const delta = 1 / bubbles.length;
 
   return (
@@ -40,7 +41,7 @@ const ChatBubble = ({ progress }: ChatBubbleProps) => {
           const start = index * delta;
           const end = start + delta;
 
-          return <Bubble key={index} {...{ progress, start, end }} />;
+          return <Bubble key={index} {...{ progress, start, end, index }} />;
         })}
       </View>
     </View>
