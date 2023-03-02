@@ -5,6 +5,7 @@ import {
   withRepeat,
   withTiming,
 } from "react-native-reanimated";
+import { withPause } from "react-native-redash";
 
 import StyleGuide from "../../constants";
 import ChatBubble from "./ChatBubble";
@@ -24,7 +25,10 @@ const HigherOrderAnimation = () => {
   const progress = useSharedValue(0);
 
   useEffect(() => {
-    progress.value = withRepeat(withTiming(1, { duration: 1000 }), -1, true);
+    progress.value = withPause(
+      withRepeat(withTiming(1, { duration: 1000 }), -1, true),
+      paused
+    );
   }, [progress]);
 
   return (

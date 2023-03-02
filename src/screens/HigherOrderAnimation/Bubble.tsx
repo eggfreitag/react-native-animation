@@ -29,7 +29,6 @@ type BubbleProps = {
 };
 
 const Bubble = ({ progress, start, end, index }: BubbleProps) => {
-  console.log(`${index}의 start: ${start}, end: ${end}`, progress.value);
   const animatedStyles = useAnimatedStyle(() => {
     const opacity = interpolate(
       progress.value,
