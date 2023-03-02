@@ -32,6 +32,17 @@ export const Cards = {
   Card6: 5,
 };
 
+export type TCard = typeof Cards[keyof typeof Cards];
+
+export const cards = [
+  Cards.Card1,
+  Cards.Card2,
+  Cards.Card3,
+  Cards.Card4,
+  Cards.Card5,
+  Cards.Card6,
+];
+
 type CardProps = {
   card: typeof Cards[keyof typeof Cards];
 };
