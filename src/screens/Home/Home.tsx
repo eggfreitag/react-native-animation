@@ -8,6 +8,7 @@ import { RootStackParamList } from "../../navigators/MasterNav";
 const animations = [
   { screen: "PanGesture", title: "🙈 Pan Gesture" },
   { screen: "Transition", title: "🐱 Transition" },
+  { screen: "HigherOrderAnimation", title: "😱 Higher Order Animation" },
 ] as const;
 
 type Props = NativeStackScreenProps<RootStackParamList, "Home">;

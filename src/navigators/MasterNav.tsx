@@ -4,11 +4,13 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Home from "../screens/Home";
 import PanGesture from "../screens/PanGesture";
 import Transition from "../screens/Transition";
+import HigherOrderAnimation from "../screens/HigherOrderAnimation";
 
 export type RootStackParamList = {
   Home: undefined;
   PanGesture: undefined;
   Transition: undefined;
+  HigherOrderAnimation: undefined;
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -35,6 +37,13 @@ const MasterNav = () => {
         component={Transition}
         options={{
           title: "Transition",
+        }}
+      />
+      <Stack.Screen
+        name="HigherOrderAnimation"
+        component={HigherOrderAnimation}
+        options={{
+          title: "Higher Order Animation",
         }}
       />
     </Stack.Navigator>
