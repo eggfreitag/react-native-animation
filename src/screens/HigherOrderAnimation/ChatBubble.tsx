@@ -1,6 +1,6 @@
 import React from "react";
 import { SharedValue } from "react-native-reanimated";
-import { View, Text, Dimensions, StyleSheet } from "react-native";
+import { View, Dimensions, StyleSheet } from "react-native";
 
 import Bubble from "./Bubble";
 

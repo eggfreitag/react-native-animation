@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { View, StyleSheet, Button } from "react-native";
 import {
   useSharedValue,
   withRepeat,
   withTiming,
 } from "react-native-reanimated";
 import { withPause } from "react-native-redash";
+import { View, StyleSheet, Button } from "react-native";
 
-import StyleGuide from "../../constants";
 import ChatBubble from "./ChatBubble";
+import StyleGuide from "../../constants";
 
 const styles = StyleSheet.create({
   container: {
